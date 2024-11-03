@@ -2,9 +2,9 @@
     position: relative;
     display: flex;
     background-color: var(--secondary-green);
-    width: 47px;
-    height: 22px;
-    border-radius: 10px;
+    width: 50px;
+    height: 25px;
+    border-radius: 15px;
     transition: .5s;
     border: var(--bg-contrast) 2px solid;
     cursor: pointer;
@@ -15,16 +15,17 @@
 }
 
 .toggleTheme__circle {
-    height: 12px;
-    width: 12px;
+    height: 13px;
+    width: 13px;
     border-radius: 10px;
     background-color: var(--bg-color);
     position: absolute;
     left: 2px;
     transition: .5s;
+    border: var(--bg-accent) 2px solid;
 }
 
 .toggleTheme__circleActive {
-    left: calc(100% - 14px); 
+    left: calc(100% - 15px); 
 }
 

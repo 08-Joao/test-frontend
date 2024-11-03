@@ -3,6 +3,9 @@ import "../styles/Navbar.css";
 import ToggleTheme from "./toggleTheme";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { 
+  IoSearch,
+  IoChevronDown  } from "react-icons/io5";
 
 const navButtons = {
   Inicío: "/",
@@ -61,8 +64,17 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="navbar__searchContainer">
-        <div className="navbar__body"></div>
+      <div className="navbar__searchWrapper">
+        <div className="navbar__searchContainer">
+          <div className="navbar__searchFilter">
+            <h3>Filtros</h3>
+            <IoChevronDown size={20} style={{ color: "var(--text-contrast)" }}/>
+          </div>
+          <input placeholder="Busque por... Casa em Santa Bárbara"></input>
+          <button>
+            <IoSearch size={20} style={{ color: "var(--text-reverse)" }}/>
+          </button>
+        </div>
       </div>
     </div>
   );

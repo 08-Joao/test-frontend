@@ -19,13 +19,14 @@
 }
 
 [data-theme="dark"] {
-    --bg-color: #1c1c1c;
-    --bg-accent: #000000;
-    --bg-contrast: #262626;
-    --text-color: #ffffff;
+    --bg-color: #121212;
+    --bg-accent: #1f1f1f;
+    --bg-contrast: #2a2a2a;
+    --text-color: #e3e3e3;
     --text-reverse: #000000;
-    --text-contrast: #5c5c5c;
-    --primary-green: #0e7120;
-    --secondary-green: #1ca635;
-    --darker-green: #007f54;
+    --text-contrast: #b3b3b3;
+    --primary-green: #17b978;
+    --secondary-green: #28c76f;
+    --darker-green: #106d4a;
+
 }

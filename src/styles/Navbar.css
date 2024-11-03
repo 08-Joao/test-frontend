@@ -17,30 +17,12 @@
     z-index: 2;
 }
 
-.navbar__searchContainer { 
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    z-index: 1;
-}
-
-.navbar__body {     
-    right: 0;
-    background-color: var(--bg-accent);
-    display: flex;
-    width: 40%;
-    height: 50px;
-    border-radius: 0 0 10px 10px;
-    transition: .5s;
-}
 
 .navbar__half {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 24px;
 }
 
 .navbar__1st { 
@@ -48,7 +30,6 @@
 }
 
 .navbar__logo { 
-    /* width: 20px; */
     max-height: 40px;
     cursor: pointer;
 }
@@ -85,10 +66,77 @@
 
 .navbar__login { 
     background-color: var(--primary-green);
-    padding: 2px;
+    padding: 4px;
     border-radius: 12px;
+
+    & h3 { 
+        font-weight: 500;
+        color: var(--text-reverse);
+    }
 }
-.navbar__login h3 {
-    font-weight: 500;
-    color: var(--text-reverse);
-} 
+
+
+.navbar__searchWrapper { 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    z-index: 1;
+}
+
+.navbar__searchContainer {     
+    right: 0;
+    background-color: var(--bg-accent);
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 12px;
+    border-radius: 0 0 10px 10px;
+    padding: 10px ;
+    transition: .5s;
+
+    & input { 
+        background-color: var(--bg-contrast);
+        width: 670px;
+        height: 100%;
+        border-radius: 16px;
+        border: none;
+        padding: 10px;
+        transition: .5s;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    & button {
+        background-color: var(--primary-green);
+        border: none;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+
+.navbar__searchFilter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 16px;
+    border: solid 2px var(--text-contrast);
+    transition: .5s;
+
+    & h3 { 
+        font-size: 16px;
+        color: var(--text-contrast);
+    }
+
+
+}
+
+.test { 
+    background-color: var(--primary-green);
+}
+
