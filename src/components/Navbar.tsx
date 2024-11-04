@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { 
   IoSearch,
-  IoChevronDown  } from "react-icons/io5";
+  IoChevronDown
+ } from "react-icons/io5";
 
 const navButtons = {
   Inicío: "/",

@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import Signin from "./pages/Signin";
 
 function routes() {
   return (
@@ -20,6 +21,8 @@ function routes() {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/forgot-password" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

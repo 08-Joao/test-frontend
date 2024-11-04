@@ -1,3 +1,9 @@
+.toggleTheme__wrapper { 
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .toggleTheme__container { 
     position: relative;
     display: flex;

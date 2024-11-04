@@ -1,0 +1,30 @@
+.defaultInput__wrapper { 
+    position: relative;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.defaultInput__container { 
+    height: 100%;
+    width: 100%;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border-radius: 16px;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: .5s;
+}
+
+.defaultInput__icon { 
+    position: absolute;
+    right: 12px;
+}
+
+.defaultInput__selectable { 
+    cursor: pointer;
+}
