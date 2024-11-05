@@ -10,7 +10,9 @@ interface InputProps {
   type?: string | "text";
   icon?: IconType;
   maxLenght?: number;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Adicione isso
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+  value?: string;
+  disabled?: boolean;
 }
 
 function DefaultInput(props: InputProps): JSX.Element {
@@ -23,6 +25,8 @@ function DefaultInput(props: InputProps): JSX.Element {
     setPassInputType(showPassword ? "password" : "text");
   };
 
+
+
   return (
     <div className="defaultInput__wrapper">
       <input
@@ -32,6 +36,8 @@ function DefaultInput(props: InputProps): JSX.Element {
         placeholder={props.placeHolder}
         maxLength={props.maxLenght}
         onChange={props.onChange} 
+        value={props.value}
+        disabled={props.disabled}
       />
       {props.icon && props.type !== "password" ? (
         <props.icon size={20} className="defaultInput__icon" />

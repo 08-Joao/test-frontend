@@ -22,17 +22,16 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProtectedRoute = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); // Estado para controle de autenticação
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(null); 
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // await axios.get(`${import.meta.env.VITE_API_URL}/auth`, { withCredentials: true }).then((res) => console.log("RESPNSE" + res.data));
         await axios.get(`${import.meta.env.VITE_API_URL}/user/auth`, { withCredentials: true });
-        setIsAuthenticated(true); // Se a requisição for bem-sucedida, o usuário está autenticado
+        setIsAuthenticated(true);
       } catch (error) {
-        setIsAuthenticated(false); // Se houver um erro, o usuário não está autenticado
+        setIsAuthenticated(false); 
       }
     };
 

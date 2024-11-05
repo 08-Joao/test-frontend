@@ -15,7 +15,7 @@ const navButtons = {
   Sobre: "/sobre",
 };
 
-function Navbar() {
+function Navbar({ isLogged } : {isLogged: boolean}) {
   const navigate = useNavigate();
 
   return (
@@ -54,7 +54,8 @@ function Navbar() {
             <h3>Contato</h3>
             <div className="navbar__selected"></div>
           </div>
-          <div
+          {isLogged === false ? (
+            <div
             onClick={() => {
               navigate("/login");
             }}
@@ -62,6 +63,11 @@ function Navbar() {
           >
             <h3>ENTRAR</h3>
           </div>
+          ) : (
+           <div className="navbar__profilePic">
+            
+           </div>
+          )}
         </div>
       </div>
 

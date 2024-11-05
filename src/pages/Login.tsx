@@ -1,50 +1,76 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultInput from "../components/defaultInput";
 import "../styles/Login.css";
-import { IoPersonOutline } from "react-icons/io5";
+import { IoMailOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-
-
 function Login() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); 
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await axios.get(`${import.meta.env.VITE_API_URL}/user/auth`, {
+          withCredentials: true,
+        });
+        navigate("/"); 
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setCheckingAuth(false); 
+      }
+    };
 
-    useEffect(() => { 
-        console.log(password)
-    },[password])
+    checkAuth();
+  }, [navigate]);
+
   const logIn = async () => {
-    await axios
-      .post(
+    setLoading(true);
+    setErrorMessage("");
+    try {
+      await axios.post(
         `${import.meta.env.VITE_API_URL}/user/login`,
         {
-          email: "maumau@gmail.com",
-          password: "pass123",
+          email,
+          password,
+          rememberMe
         },
         {
           withCredentials: true,
         }
-      )
-      .then((res) => console.log(res.data));
+      ).then((response) => {
+        if (response.status === 200) {
+          navigate("/");
+        }
+      })            
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        setErrorMessage("Credenciais inválidas");
+      } else {
+        setErrorMessage("Ocorreu um erro. Tente novamente.");
+      }
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const changePass = async () => {
-    await axios
-      .put(
-        `${import.meta.env.VITE_API_URL}/user/update`,
-        {
-          password: "pass123",
-          phone: "(11)99999-9999",
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => console.log(res.data));
-  };
+  if (checkingAuth) {    
+    return (
+      <div className="login__wrapper">
+      <div className="login__loadingContainer">
+        <div className="spinner"></div>
+      </div>
+      </div>
+    );
+  }
 
   return (
     <div className="login__wrapper">
@@ -53,7 +79,7 @@ function Login() {
         <DefaultInput
           type="email"
           className="login__input"
-          icon={IoPersonOutline}
+          icon={IoMailOutline}
           placeHolder="Email"
           maxLenght={254}
           onChange={(e) => setEmail(e.target.value)}
@@ -65,19 +91,32 @@ function Login() {
           maxLenght={128}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="login__button" onClick={logIn}>
-          ENTRAR
-        </button>
+
+        {errorMessage && <p className="login__error">{errorMessage}</p>}
+
+        {loading ? (
+          <div className="login__loadingContainer">
+            <div className="spinner"></div>
+          </div>
+        ) : (
+          <button className="login__button" onClick={logIn}>
+            ENTRAR
+          </button>
+        )}
+
         <div className="login__options">
           <div className="login__rememberMe">
-            <input type="checkbox" id="remember-me"></input>
+            <input type="checkbox" id="remember-me" onClick={() => setRememberMe(!rememberMe)}></input>
             <label htmlFor="remember-me">Lembre de mim</label>
           </div>
-          <button onClick={() => navigate("/forgot-password")}>Esqueci minha senha</button>
+          <button onClick={() => navigate("/forgot-password")}>
+            Esqueceu sua senha?
+          </button>
         </div>
         <div className="login__signIn">
           <p className="login__forgotPass">
-            É novo por aqui?<button onClick={() => navigate("/signin")}>Registre-se</button>
+            É novo por aqui?
+            <button onClick={() => navigate("/signin")}>Registre-se</button>
           </p>
         </div>
       </div>
