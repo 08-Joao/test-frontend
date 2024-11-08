@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultInput from "../components/defaultInput";
-import "../styles/Signin.css";
+import "../styles/signup.css";
 import { useNavigate } from "react-router-dom";
 import { formatCPF } from "../services/CpfFormatter";
 import { formatPhoneNumber } from "../services/PhoneFormatter";
@@ -10,14 +10,13 @@ import {
   IoDocumentTextOutline,
   IoCallOutline,
   IoMailOutline,
-  IoLockClosedOutline,
 } from "react-icons/io5";
 import { verifyAge } from "../services/DateVerifier";
 import { verifyEmail } from "../services/EmailVerifier";
 import { validName } from "../services/NameVerifier";
 import { validPassword } from "../services/PasswordVerifier";
 
-function Signin() {
+function SignUp() {
   const navigate = useNavigate();
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [isCpfDisabled, setIsCpfDisabled] = useState(false);
@@ -48,7 +47,7 @@ function Signin() {
     checkAuth();
   }, [navigate]);
 
-  const signIn = async () => {
+  const signup = async () => {
     setLoading(true);
     setErrorMessage("");
 
@@ -101,7 +100,7 @@ function Signin() {
     try {
       await axios
         .post(
-          `${import.meta.env.VITE_API_URL}/user/signin`,
+          `${import.meta.env.VITE_API_URL}/user/signup`,
           {
             name,
             cpf,
@@ -140,8 +139,8 @@ function Signin() {
 
   if (checkingAuth) {
     return (
-      <div className="signin__wrapper">
-        <div className="signin__loadingContainer">
+      <div className="signup__wrapper">
+        <div className="signup__loadingContainer">
           <div className="spinner"></div>
         </div>
       </div>
@@ -149,19 +148,19 @@ function Signin() {
   }
 
   return (
-    <div className="signin__wrapper">
-      <div className="signin__formBody">
+    <div className="signup__wrapper">
+      <div className="signup__formBody">
         <h1>REGISTRE-SE</h1>
         <div className="sigin__container">
           <DefaultInput
-            className="signin__input"
+            className="signup__input"
             icon={IoPersonOutline}
             placeHolder="Nome"
             maxLenght={254}
             onChange={(e) => setName(e.target.value)}
           />
           <DefaultInput
-            className="signin__input"
+            className="signup__input"
             icon={IoDocumentTextOutline}
             placeHolder="CPF"
             maxLenght={128}
@@ -173,7 +172,7 @@ function Signin() {
         <div className="sigin__container">
           <DefaultInput
             type="phone"
-            className="signin__input"
+            className="signup__input"
             icon={IoCallOutline}
             placeHolder="Telefone"
             maxLenght={15}
@@ -182,7 +181,7 @@ function Signin() {
           />
           <DefaultInput
             type="date"
-            className="signin__input"
+            className="signup__input"
             placeHolder="Data de Nascimento"
             maxLenght={128}
             onChange={(e) => setBirthdate(e.target.value)}
@@ -191,7 +190,7 @@ function Signin() {
         <div className="sigin__container">
           <DefaultInput
             type="email"
-            className="signin__input"
+            className="signup__input"
             icon={IoMailOutline}
             placeHolder="Email"
             maxLenght={254}
@@ -201,31 +200,31 @@ function Signin() {
         <div className="sigin__container">
           <DefaultInput
             type="password"
-            className="signin__input"
+            className="signup__input"
             placeHolder="Senha"
             maxLenght={128}
             onChange={(e) => setPassword(e.target.value)}
           />
           <DefaultInput
             type="password"
-            className="signin__input"
+            className="signup__input"
             placeHolder="Repita a Senha"
             maxLenght={128}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        {errorMessage && <p className="signin__error">{errorMessage}</p>}
+        {errorMessage && <p className="signup__error">{errorMessage}</p>}
         {loading ? (
-          <div className="signin__loadingContainer">
+          <div className="signup__loadingContainer">
             <div className="spinner"></div>
           </div>
         ) : (
-          <button className="signin__button" onClick={signIn}>
+          <button className="signup__button" onClick={signup}>
             REGISTRAR
           </button>
         )}
-        <div className="signin__logIn">
-          <p className="signin__haveAccount">
+        <div className="signup__logIn">
+          <p className="signup__haveAccount">
             Já possui uma conta?
             <button onClick={() => navigate("/login")}>Entrar</button>
           </p>
@@ -235,4 +234,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default SignUp;

@@ -64,7 +64,7 @@ function Navbar({ isLogged } : {isLogged: boolean}) {
             <h3>ENTRAR</h3>
           </div>
           ) : (
-           <div className="navbar__profilePic">
+           <div className="navbar__profilePic" onClick={() => navigate("/profile")}>
             
            </div>
           )}

@@ -76,6 +76,7 @@ function Login() {
     <div className="login__wrapper">
       <div className="login__formBody">
         <h1>LOGIN</h1>
+        <p className="login__backToHome">Voltar à <label onClick={() => navigate("/")}>Página Inicial</label></p>
         <DefaultInput
           type="email"
           className="login__input"
@@ -116,7 +117,7 @@ function Login() {
         <div className="login__signIn">
           <p className="login__forgotPass">
             É novo por aqui?
-            <button onClick={() => navigate("/signin")}>Registre-se</button>
+            <button onClick={() => navigate("/signup")}>Registre-se</button>
           </p>
         </div>
       </div>

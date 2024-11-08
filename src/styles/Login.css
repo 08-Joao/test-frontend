@@ -127,6 +127,19 @@
   outline: none;
 }
 
+.login__backToHome { 
+
+  & label { 
+    color: var(--secondary-green);
+    transition: .5s;
+    cursor: pointer;
+  }
+
+  & label:hover { 
+    color: var(--primary-green);
+  }
+}
+
 
 @media only screen and (max-width: 576px) {
 }
