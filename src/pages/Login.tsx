@@ -17,7 +17,7 @@ function Login() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get(`${import.meta.env.VITE_API_URL}/user/auth`, {
+        await axios.get(`${import.meta.env.VITE_API_URL}/api/user/auth`, {
           withCredentials: true,
         });
         navigate("/"); 
@@ -28,6 +28,9 @@ function Login() {
       }
     };
 
+    if (localStorage.getItem("publicId")) {
+      navigate("/"); 
+    }
     checkAuth();
   }, [navigate]);
 
@@ -36,7 +39,7 @@ function Login() {
     setErrorMessage("");
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/user/login`,
+        `${import.meta.env.VITE_API_URL}/api/user/login`,
         {
           email,
           password,
@@ -47,6 +50,8 @@ function Login() {
         }
       ).then((response) => {
         if (response.status === 200) {
+          console.log(response);
+          localStorage.setItem("publicId", response.data);
           navigate("/");
         }
       })            

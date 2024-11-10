@@ -33,7 +33,7 @@ function SignUp() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get(`${import.meta.env.VITE_API_URL}/user/auth`, {
+        await axios.get(`${import.meta.env.VITE_API_URL}/api/user/auth`, {
           withCredentials: true,
         });
         navigate("/");
@@ -100,7 +100,7 @@ function SignUp() {
     try {
       await axios
         .post(
-          `${import.meta.env.VITE_API_URL}/user/signup`,
+          `${import.meta.env.VITE_API_URL}/api/user/signup`,
           {
             name,
             cpf,

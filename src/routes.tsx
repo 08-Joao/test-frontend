@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import SignUp from "./pages/Signup";
+import ProfileRedirect from "./components/profileRedirect";
 
 function routes() {
   return (
@@ -12,13 +13,10 @@ function routes() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<ProfileRedirect />} />
           <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
+            path="/profile/:userid"
+            element={<Profile />}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />

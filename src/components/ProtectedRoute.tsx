@@ -1,34 +1,16 @@
-// // ProtectedRoute.js
-// import React from 'react';
-// import { Navigate } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const token = Cookies.get('token');
-
-//   if (!token) {
-//     console.log("NKDSJFBNKJSDBFJBSDF ---> ", token)
-//     return <Navigate to="/login" />;
-//   }
-
-//   return children;
-// };
-
-// export default ProtectedRoute;
-
-
-// ProtectedRoute.js
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTheme } from '../contexts/ThemeContext';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); 
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get(`${import.meta.env.VITE_API_URL}/user/auth`, { withCredentials: true });
+        await axios.get(`${import.meta.env.VITE_API_URL}/api/user/auth`, { withCredentials: true });
         setIsAuthenticated(true);
       } catch (error) {
         setIsAuthenticated(false); 
@@ -39,13 +21,18 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>; // Exiba um carregando enquanto verifica a autenticação
+    return (
+      <div className="home__loadingContainer" data-theme={isDarkMode ? 'dark' : 'light'}>
+        <div className="spinner"></div>
+      </div>
+    ) // Exiba um carregando enquanto verifica a autenticação
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />; // Redireciona para login se não estiver autenticado
   }
 
+  console.log(children)
   return children; // Retorna os filhos se estiver autenticado
 };
 
