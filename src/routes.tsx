@@ -15,7 +15,7 @@ function routes() {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<ProfileRedirect />} />
           <Route
-            path="/profile/:userid"
+            path="/profile/:profileId"
             element={<Profile />}
           />
           <Route path="/login" element={<Login />} />
