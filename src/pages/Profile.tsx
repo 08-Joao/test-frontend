@@ -70,7 +70,6 @@ function Profile() {
         }
       );
 
-      console.log("Arquivos enviados com sucesso:", response.data);
     } catch (error) {
       console.error("Erro ao enviar os arquivos:", error);
       setError("Erro ao enviar os arquivos");
@@ -88,8 +87,6 @@ function Profile() {
             }
           )
           .then((response) => {
-            console.log("Olha a resposta");
-            console.log(response.data);
             setUserInformation(response.data);
             setInfoLoaded(true);
           });
