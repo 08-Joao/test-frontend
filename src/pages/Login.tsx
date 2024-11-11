@@ -28,9 +28,6 @@ function Login() {
       }
     };
 
-    if (localStorage.getItem("publicId")) {
-      navigate("/"); 
-    }
     checkAuth();
   }, [navigate]);
 

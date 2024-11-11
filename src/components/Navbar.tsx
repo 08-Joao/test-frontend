@@ -15,7 +15,14 @@ const navButtons = {
   Sobre: "/sobre",
 };
 
-function Navbar({ isLogged } : {isLogged: boolean}) {
+const dropdownButtons = {
+  Profile: "/profile",
+  ["Meus Imóveis"]: "/houses",
+  Sair: "/sobre",
+};
+
+
+function Navbar({ isLogged, profilePicture } : {isLogged: boolean, profilePicture: string}) {
   const navigate = useNavigate();
 
   return (
@@ -64,8 +71,15 @@ function Navbar({ isLogged } : {isLogged: boolean}) {
             <h3>ENTRAR</h3>
           </div>
           ) : (
-           <div className="navbar__profilePic" onClick={() => navigate("/profile")}>
-            
+           <div className="navbar__profilePic">
+            <img src={profilePicture} className="navbar__profilePicture" />
+            <div className="navbar__profileDropdown">
+            {Object.entries(dropdownButtons).map(([label, index]) => (
+              <div className="navbar__dropdownItem" key={label} onClick={() => navigate(index)}>
+                <h3>{label}</h3>
+              </div>
+            ))}
+            </div>
            </div>
           )}
         </div>

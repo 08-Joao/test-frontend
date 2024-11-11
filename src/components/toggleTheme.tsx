@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import "../styles/toggleTheme.css";
-import { IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
+import { FaRegMoon, FaRegSun } from "react-icons/fa6";
 
 function ToggleTheme(): JSX.Element {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -9,9 +9,9 @@ function ToggleTheme(): JSX.Element {
   return (
     <div className="toggleTheme__wrapper">
       {isDarkMode ? (
-        <IoMoonOutline size={18} style={{ color: "var(--text-color)"}} />
+        <FaRegMoon size={20} style={{ color: "var(--text-color)"}} />
       ) : (
-        <IoSunnyOutline size={20} style={{ color: "var(--text-color)" }} />
+        <FaRegSun size={18} style={{ color: "var(--text-color)" }} />
       )}
       <div className="toggleTheme__container" onClick={toggleDarkMode}>
         <div

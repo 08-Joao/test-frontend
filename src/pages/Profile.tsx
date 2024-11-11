@@ -2,9 +2,9 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import "../styles/Profile.css";
 import { useTheme } from "../contexts/ThemeContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ProfileUserInformationType } from "../types/profileUserInformation";
-import { IoHome, IoShieldCheckmark, IoPerson, IoShareSocial } from "react-icons/io5";
+import { FaHouse, FaUserShield, FaUser, FaShareFromSquare, FaArrowLeft  } from "react-icons/fa6";
 
 const getRole: { [key: string]: string } = {
   ADMIN: "Administrador",
@@ -13,6 +13,7 @@ const getRole: { [key: string]: string } = {
 };
 
 function Profile() {
+  const navigate = useNavigate();
   const [files, setFiles] = useState<File[]>([]); // Estado para armazenar os arquivos selecionados
   const [error, setError] = useState<string>(""); // Estado para erros
   const [uploadProgress, setUploadProgress] = useState<number>(0); // Estado para o progresso do upload
@@ -28,6 +29,9 @@ function Profile() {
       houses: [],
     });
   const [infoLoaded, setInfoLoaded] = useState(false); // Estado de autenticação
+
+
+
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
@@ -86,11 +90,14 @@ function Profile() {
               withCredentials: true,
             }
           )
-          .then((response) => {
+          .then((response) => {            
             setUserInformation(response.data);
             setInfoLoaded(true);
           });
       } catch (error) {
+        if(error.response.status === 401) {
+          navigate("/login")
+        }
         console.log(error);
       }
     };
@@ -113,6 +120,10 @@ function Profile() {
       className="profile__wrapper"
       data-theme={isDarkMode ? "dark" : "light"}
     >
+      <div className="profile__backToHome" onClick={() => {navigate("/")}}>
+        <FaArrowLeft />
+        <p>Voltar para à <label>Página Inicial</label></p>
+      </div>
       <div className="profile__infoContainer">
         <div className="profile__infoBg">
           <img
@@ -128,11 +139,11 @@ function Profile() {
               <p className="profile__name">{userInformation.name}</p>
               <div className="profile__roleContainer">
                 {getRole[userInformation.role] === "Administrador" ? (
-                  <IoShieldCheckmark size={16} />
+                  <FaUserShield size={16} />
                 ) : getRole[userInformation.role] === "Corretor" ? (
-                  <IoHome size={16} />
+                  <FaHouse size={16} />
                 ) : (
-                  <IoPerson size={16} />
+                  <FaUser size={16} />
                 )}
                 <p className="profile__role">{getRole[userInformation.role]}</p>
               </div>
@@ -140,11 +151,11 @@ function Profile() {
           </div>
           <div className="profile__profileIcons">
             <div className="profile__iconItem">
-              <IoHome className="profile__icon" size={16} />
+              <FaHouse className="profile__icon" size={16} />
               <p>{userInformation.houses.length}</p>
             </div>
             <div className="profile__iconItem">
-              <IoShareSocial size={16} className="profile__icon"/>
+              <FaShareFromSquare size={16} className="profile__icon"/>
             </div>
           </div>
         </div>
