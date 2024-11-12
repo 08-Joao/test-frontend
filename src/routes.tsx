@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import SignUp from "./pages/Signup";
 import ProfileRedirect from "./components/profileRedirect";
+import CreateHouse from "./pages/CreateHouse";
 
 function routes() {
   return (
@@ -18,6 +19,9 @@ function routes() {
             path="/profile/:profileId"
             element={<Profile />}
           />
+          <Route path="/createHouse/" element={<ProtectedRoute>
+            <CreateHouse />
+          </ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<Login />} />
