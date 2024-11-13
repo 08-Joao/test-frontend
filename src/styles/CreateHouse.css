@@ -24,6 +24,10 @@
     border-radius: 24px;
 }
 
+.createHouse__title {
+  color: var(--secondary-green);
+}
+
 .createHouse__input {
   width: 100%;
   padding: 12px;
@@ -33,7 +37,12 @@
   transition: border-color 0.3s;
 }
 
+.createHouse__logradouro { 
+  flex: 2;
+}
+
 .createHouse__input:focus {
   border-color: var(--secondary-green);
   outline: none;
 }
+
