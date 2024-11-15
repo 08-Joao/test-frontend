@@ -5,7 +5,7 @@ import DefaultInput from "../components/defaultInput";
 import { useNavigate } from "react-router-dom";
 import { formatCEP } from "../services/CEPFormatter";
 import axios from "axios";
-import { FaBed, FaBath, FaCarSide } from "react-icons/fa6";
+import { FaBed, FaBath, FaCarSide, FaDollarSign } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { formatArea } from "../services/AreaFormatter";
 import { formatCurrency } from "../services/PriceFormatter";
@@ -40,7 +40,9 @@ const ufOptions = [
   "TO",
 ];
 
-const QuantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const QuantityOptions = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const SaleTypeOptions = ["Venda", "Aluguel"];
 
 function CreateHouse() {
   const { isDarkMode } = useTheme();
@@ -54,11 +56,15 @@ function CreateHouse() {
   const [price, setPrice] = useState("R$ 0");
   const [area, setArea] = useState("M² 0");
   const [description, setDescription] = useState("");
-  const [suite, setSuite] = useState(0);
-  const [rooms, setRooms] = useState(0);
+  const [suites, setSuites] = useState(0);
+  const [bedrooms, setBedrooms] = useState(0);
   const [bathrooms, setBathrooms] = useState(0);
   const [garages, setGarages] = useState(0);
+  const [financialType, setFinancialType] = useState("Aluguel");
   const [isCepDisabled, setIsCepDisabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     if (cep.length === 9) {
@@ -81,6 +87,38 @@ function CreateHouse() {
     getCEP();
   }, [cep]);
 
+
+  const createHouse = async () => {
+    setLoading(true);
+
+    try {
+      const houseInfo = {
+        status: financialType,
+        price,
+        adress: `${logradouro}, ${bairro}, ${complemento}, ${city}, ${uf}`,
+        description,
+        area,
+        suites,
+        bedrooms,
+        bathrooms,
+        garages
+      }
+
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/houses/createHouse`, 
+      houseInfo, {
+        withCredentials: true,
+      }).then((response) => {
+        if(response.status === 200) {
+          navigate("/");
+        }
+      })
+    }catch(error) {
+      console.log(error);
+    }finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div
       className="createHouse__wrapper"
@@ -94,19 +132,17 @@ function CreateHouse() {
         <div className="createHouse__container">
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="CEP"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setCep(formatCEP(e.target.value))}
             value={cep}
             disabled={isCepDisabled}
           />
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="Logradouro"
             flex={2}
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setLogradouro(e.target.value)}
             value={logradouro}
           />
@@ -115,17 +151,15 @@ function CreateHouse() {
         <div className="createHouse__container">
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="Complemento"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setComplemento(e.target.value)}
             value={complemento}
           />
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="Bairro"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setBairro(e.target.value)}
             value={bairro}
           />
@@ -134,19 +168,16 @@ function CreateHouse() {
         <div className="createHouse__container">
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="Cidade"
-            maxLenght={254}
+            maxLength={254}
             disabled={true}
             value={city}
             flex={2}
-            // onChange={(e) => setName(e.target.value)}
           />
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="UF"
-            maxLenght={254}
+            maxLength={254}
             disabled={true}
             value={uf}
             menuList={ufOptions}
@@ -156,27 +187,25 @@ function CreateHouse() {
         <div className="createHouse__container">
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="Área Total"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setArea(formatArea(e.target.value))}
             value={area}
           />
           <DefaultInput
             className="createHouse__input"
-            // icon={IoPersonOutline}
             placeHolder="Valor"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setPrice(formatCurrency(e.target.value))}
             value={price}
           />
         </div>
         <div className="createHouse__container">
           <DefaultInput
-            className="createHouse__input"
-            // icon={IoPersonOutline}
+            className="createHouse__input"            
             placeHolder="Descrição"
-            maxLenght={800}
+            maxLength={800}
+            type="textarea"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
@@ -185,32 +214,49 @@ function CreateHouse() {
           <DefaultInput
             className="createHouse__input"
             icon={IoBed}
-            maxLenght={254}
+            maxLength={254}
             menuList={QuantityOptions}
-            onChange={(e) => setSuite(parseInt(e.target.value))}
+            onChange={(e) => setSuites(parseInt(e.target.value))}
           />
           <DefaultInput
             className="createHouse__input"
             icon={FaBed}
-            maxLenght={254}
+            maxLength={254}
             menuList={QuantityOptions}
-            onChange={(e) => setRooms(parseInt(e.target.value))}
+            onChange={(e) => setBedrooms(parseInt(e.target.value))}
           />
           <DefaultInput
             className="createHouse__input"
             icon={FaBath}
-            maxLenght={254}
+            maxLength={254}
             menuList={QuantityOptions}
             onChange={(e) => setBathrooms(parseInt(e.target.value))}
           />
           <DefaultInput
             className="createHouse__input"
             icon={FaCarSide}            
-            maxLenght={254}
+            maxLength={254}
             menuList={QuantityOptions}
             onChange={(e) => setGarages(parseInt(e.target.value))}
           />
+          <DefaultInput
+            className="createHouse__input"
+            icon={FaDollarSign}            
+            maxLength={254}
+            menuList={SaleTypeOptions}
+            onChange={(e) => setFinancialType(e.target.value.toUpperCase())}
+          />
         </div>
+        {errorMessage && <p className="signup__error">{errorMessage}</p>}
+        {loading ? (
+          <div className="createHouse__loadingContainer">
+            <div className="spinner"></div>
+          </div>
+        ) : (
+          <button className="createHouse__button" onClick={createHouse}>
+            ADICIONAR
+          </button>
+        )}
       </div>
     </div>
   );

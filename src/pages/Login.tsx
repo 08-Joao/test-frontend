@@ -84,14 +84,14 @@ function Login() {
           className="login__input"
           icon={IoMailOutline}
           placeHolder="Email"
-          maxLenght={254}
+          maxLength={254}
           onChange={(e) => setEmail(e.target.value)}
         />
         <DefaultInput
           type="password"
           className="login__input"
           placeHolder="Senha"
-          maxLenght={128}
+          maxLength={128}
           onChange={(e) => setPassword(e.target.value)}
         />
 

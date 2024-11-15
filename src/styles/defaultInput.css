@@ -1,6 +1,7 @@
-.defaultInput__wrapper { 
+/* .defaultInput__wrapper { 
     position: relative;
-    height: 50px;
+    min-height: 50px;
+    height: auto;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -28,4 +29,41 @@
 
 .defaultInput__selectable { 
     cursor: pointer;
-}
+} */
+
+.defaultInput__container {
+    width: 100%;
+    min-height: 50px;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border-radius: 16px;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.5s;
+    resize: none; 
+    overflow: hidden;
+  }
+  
+  .defaultInput__wrapper {
+    position: relative;
+    min-height: 50px;
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    transition: .5s;
+  }
+  
+  .defaultInput__icon {
+    position: absolute;
+    right: 12px;
+  }
+  
+  .defaultInput__selectable {
+    cursor: pointer;
+  }
+  

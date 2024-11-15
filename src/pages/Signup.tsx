@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultInput from "../components/defaultInput";
-import "../styles/signup.css";
+import "../styles/Signup.css"
 import { useNavigate } from "react-router-dom";
 import { formatCPF } from "../services/CpfFormatter";
 import { formatPhoneNumber } from "../services/PhoneFormatter";
@@ -156,14 +156,14 @@ function SignUp() {
             className="signup__input"
             icon={IoPersonOutline}
             placeHolder="Nome"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setName(e.target.value)}
           />
           <DefaultInput
             className="signup__input"
             icon={IoDocumentTextOutline}
             placeHolder="CPF"
-            maxLenght={128}
+            maxLength={128}
             onChange={(e) => setCpf(formatCPF(e.target.value))}
             value={cpf}
             disabled={isCpfDisabled}
@@ -175,7 +175,7 @@ function SignUp() {
             className="signup__input"
             icon={IoCallOutline}
             placeHolder="Telefone"
-            maxLenght={15}
+            maxLength={15}
             onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
             value={phone}
           />
@@ -183,7 +183,7 @@ function SignUp() {
             type="date"
             className="signup__input"
             placeHolder="Data de Nascimento"
-            maxLenght={128}
+            maxLength={128}
             onChange={(e) => setBirthdate(e.target.value)}
           />
         </div>
@@ -193,7 +193,7 @@ function SignUp() {
             className="signup__input"
             icon={IoMailOutline}
             placeHolder="Email"
-            maxLenght={254}
+            maxLength={254}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -202,14 +202,14 @@ function SignUp() {
             type="password"
             className="signup__input"
             placeHolder="Senha"
-            maxLenght={128}
+            maxLength={128}
             onChange={(e) => setPassword(e.target.value)}
           />
           <DefaultInput
             type="password"
             className="signup__input"
             placeHolder="Repita a Senha"
-            maxLenght={128}
+            maxLength={128}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/defaultInput.css";
 import { IconType } from "react-icons";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
@@ -9,8 +9,8 @@ interface InputProps {
   className?: string;
   type?: string | "text";
   icon?: IconType;
-  maxLenght?: number;
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void;
+  maxLength?: number;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   value?: string;
   flex?: number;
   disabled?: boolean;
@@ -20,6 +20,7 @@ interface InputProps {
 function DefaultInput(props: InputProps): JSX.Element {
   const [showPassword, setShowPassword] = useState(false);
   const [passInputType, setPassInputType] = useState(props.type);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const toggleShowPassword = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -27,7 +28,13 @@ function DefaultInput(props: InputProps): JSX.Element {
     setPassInputType(showPassword ? "password" : "text");
   };
 
-
+  // Ajusta a altura do textarea automaticamente
+  useEffect(() => {
+    if (props.type === "textarea" && textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [props.value, props.type]);
 
   return (
     <div
@@ -47,10 +54,22 @@ function DefaultInput(props: InputProps): JSX.Element {
             ))}
           </select>
         </>
+      ) : props.type === "textarea" ? (
+        <textarea
+          ref={textareaRef}
+          className={`${props.className} defaultInput__container`}
+          style={props.style}
+          placeholder={props.placeHolder}
+          maxLength={props.maxLength}
+          onChange={props.onChange}
+          value={props.value}
+          disabled={props.disabled}
+          rows={1}
+        />
       ) : (
         <>
           <input
-            type={props.type}
+            type={props.type === "password" ? passInputType : props.type}
             className={`${props.className} defaultInput__container`}
             style={props.style}
             placeholder={props.placeHolder}
@@ -81,8 +100,6 @@ function DefaultInput(props: InputProps): JSX.Element {
       )}
     </div>
   );
-  
-  
 }
 
 export default DefaultInput;

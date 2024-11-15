@@ -15,7 +15,7 @@
 }
 
 .createHouse__inputsWrapper {
-    width: 600px;
+    width: 720px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -46,3 +46,20 @@
   outline: none;
 }
 
+
+.createHouse__button {
+  background-color: var(--secondary-green);
+  border: none;
+  width: 100%;
+  border-radius: 16px;
+  padding: 12px;
+  cursor: pointer;
+  color: var(--text-reverse);
+  font-size: 20px;
+  font-weight: 500;
+  transition: 0.5s;
+}
+
+.createHouse__button:hover {
+  background-color: var(--primary-green);
+}
