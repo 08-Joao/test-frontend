@@ -5,7 +5,13 @@ import DefaultInput from "../components/defaultInput";
 import { useNavigate } from "react-router-dom";
 import { formatCEP } from "../services/CEPFormatter";
 import axios from "axios";
-import { FaBed, FaBath, FaCarSide, FaDollarSign } from "react-icons/fa6";
+import {
+  FaBed,
+  FaBath,
+  FaCarSide,
+  FaDollarSign,
+  FaCirclePlus,
+} from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { formatArea } from "../services/AreaFormatter";
 import { formatCurrency } from "../services/PriceFormatter";
@@ -40,7 +46,7 @@ const ufOptions = [
   "TO",
 ];
 
-const QuantityOptions = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const QuantityOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const SaleTypeOptions = ["Venda", "Aluguel"];
 
@@ -64,7 +70,8 @@ function CreateHouse() {
   const [isCepDisabled, setIsCepDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     if (cep.length === 9) {
@@ -72,6 +79,10 @@ function CreateHouse() {
     }
 
     const getCEP = async () => {
+      if (cep.length !== 9) {
+        return;
+      }
+
       await axios
         .get(`https://viacep.com.br/ws/${cep.replace("-", "")}/json/`)
         .then((response) => {
@@ -87,7 +98,6 @@ function CreateHouse() {
     getCEP();
   }, [cep]);
 
-
   const createHouse = async () => {
     setLoading(true);
 
@@ -101,23 +111,28 @@ function CreateHouse() {
         suites,
         bedrooms,
         bathrooms,
-        garages
-      }
+        garages,
+      };
 
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/houses/createHouse`, 
-      houseInfo, {
-        withCredentials: true,
-      }).then((response) => {
-        if(response.status === 200) {
-          navigate("/");
-        }
-      })
-    }catch(error) {
+      await axios
+        .post(
+          `${import.meta.env.VITE_API_URL}/api/houses/createHouse`,
+          houseInfo,
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            navigate("/");
+          }
+        });
+    } catch (error) {
       console.log(error);
-    }finally {
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div
@@ -125,7 +140,23 @@ function CreateHouse() {
       meta-theme={isDarkMode ? "dark" : "light"}
     >
       <div className="createHouse__inputsWrapper">
-        <h1 className="createHouse__title">Adicionar Imóvel</h1>
+        {isModalOpen && (
+          <div className="createHouse__modalWrapper">
+            <div className="createHouse__modal">
+              <div className="createHouse__hamburguer">
+                <div className="createHouse__burguer"></div>            
+                <div className="createHouse__burguer"></div>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="createHouse__titleContainer">
+          <h1 className="createHouse__title">Adicionar Imóvel</h1>
+          <div className="createHouse__mediaContainer">
+            <h2 className="createHouse__title">Adicionar Mídia</h2>
+            <FaCirclePlus size={24} className="createHouse__mediaIcon" />
+          </div>
+        </div>
         <p className="login__backToHome">
           Voltar à <label onClick={() => navigate("/")}>Página Inicial</label>
         </p>
@@ -202,7 +233,7 @@ function CreateHouse() {
         </div>
         <div className="createHouse__container">
           <DefaultInput
-            className="createHouse__input"            
+            className="createHouse__input"
             placeHolder="Descrição"
             maxLength={800}
             type="textarea"
@@ -234,14 +265,14 @@ function CreateHouse() {
           />
           <DefaultInput
             className="createHouse__input"
-            icon={FaCarSide}            
+            icon={FaCarSide}
             maxLength={254}
             menuList={QuantityOptions}
             onChange={(e) => setGarages(parseInt(e.target.value))}
           />
           <DefaultInput
             className="createHouse__input"
-            icon={FaDollarSign}            
+            icon={FaDollarSign}
             maxLength={254}
             menuList={SaleTypeOptions}
             onChange={(e) => setFinancialType(e.target.value.toUpperCase())}

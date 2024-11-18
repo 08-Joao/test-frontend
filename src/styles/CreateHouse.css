@@ -14,18 +14,49 @@
   gap: 12px;
 }
 
-.createHouse__inputsWrapper {
-    width: 720px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 24px;
-    background-color: var(--bg-accent);
-    border-radius: 24px;
+.createHouse__titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 
 .createHouse__title {
+  height: 100%;
   color: var(--secondary-green);
+  transition: 0.5s;
+}
+
+.createHouse__mediaContainer {
+  display: flex;
+  gap: 8px;
+  height: 100%;
+  align-items: center;
+  cursor: pointer;
+}
+
+.createHouse__mediaIcon {
+  color: var(--secondary-green);
+  transition: 0.5s;
+}
+
+.createHouse__mediaContainer:hover {
+  & .createHouse__mediaIcon {
+    color: var(--primary-green);
+  }
+
+  & .createHouse__title {
+    color: var(--primary-green);
+  }
+}
+
+.createHouse__inputsWrapper {
+  width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background-color: var(--bg-accent);
+  border-radius: 24px;
 }
 
 .createHouse__input {
@@ -37,7 +68,7 @@
   transition: border-color 0.3s;
 }
 
-.createHouse__logradouro { 
+.createHouse__logradouro {
   flex: 2;
 }
 
@@ -45,7 +76,6 @@
   border-color: var(--secondary-green);
   outline: none;
 }
-
 
 .createHouse__button {
   background-color: var(--secondary-green);
@@ -62,4 +92,111 @@
 
 .createHouse__button:hover {
   background-color: var(--primary-green);
+}
+
+.createHouse__modalWrapper {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.19);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.9px);
+  -webkit-backdrop-filter: blur(9.9px);
+}
+
+.createHouse__modal {
+  width: 500px;
+  height: 400px;
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid var(--bg-contrast);
+  background-color: var(--bg-accent);
+  -webkit-box-shadow: 0px 10px 35px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.2);
+}
+.createHouse__modalCloseButtonContainer { 
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  right: 12px;
+  top: 24px;
+}
+
+.createHouse__modalCloseButton {
+  position: relative; /* Necessário para os pseudo-elementos */
+  width: 28px;
+  height: 4px;
+  border-radius: 5px;
+  background-color: var(--primary-green);
+  cursor: pointer;
+}
+
+.createHouse__hamburguer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  right: 12px;
+  top: 24px;
+  cursor: pointer;
+}
+.createHouse__burguer { 
+  width: 28px;
+  height: 4px;
+  position: absolute;
+  border-radius: 12px;
+  background-color: var(--primary-green);
+  transition: .5s;
+}
+
+.createHouse__burguer:nth-child(1) {
+  transform: translateY(-8px);
+  transform: rotate(-45deg);
+}
+.createHouse__burguer:nth-child(2) {
+  transform: translateY(8px);
+  transform: rotate(45deg);
+}
+
+.createHouse__hamburguer:hover .createHouse__burguer:nth-child(1) {
+  animation: anim1 1s forwards;
+}
+.createHouse__hamburguer:hover .createHouse__burguer:nth-child(2) {
+  animation: anim2 1s forwards;
+}
+
+@keyframes anim1 {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+@keyframes anim2 {
+  0% {
+    transform: rotate(45deg);
+  }
+  50% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
 }
