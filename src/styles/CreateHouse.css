@@ -27,6 +27,7 @@
 }
 
 .createHouse__mediaContainer {
+  position: relative;
   display: flex;
   gap: 8px;
   height: 100%;
@@ -42,10 +43,12 @@
 .createHouse__mediaContainer:hover {
   & .createHouse__mediaIcon {
     color: var(--primary-green);
+    cursor: pointer;
   }
 
   & .createHouse__title {
     color: var(--primary-green);
+    cursor: pointer;
   }
 }
 
@@ -199,4 +202,20 @@
   100% {
     transform: rotate(45deg);
   }
+}
+
+.createHouse__inputFile { 
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+}
+
+.createHouse__loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }

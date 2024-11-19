@@ -50,6 +50,19 @@ const QuantityOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const SaleTypeOptions = ["Venda", "Aluguel"];
 
+function getExtension(mimetype: string): string | null {
+  const mimeMap: { [key: string]: string } = {
+    "image/jpeg": ".jpg",
+    "image/png": ".png",
+    "video/mp4": ".mp4",
+    "video/mpeg": ".mpeg",
+    "video/quicktime": ".mov",
+  };
+
+  return mimeMap[mimetype] || null;
+}
+
+
 function CreateHouse() {
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
@@ -71,7 +84,7 @@ function CreateHouse() {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
+  const [mediaFiles, setMediaFiles] = useState<File[]>([]);
 
   useEffect(() => {
     if (cep.length === 9) {
@@ -98,41 +111,80 @@ function CreateHouse() {
     getCEP();
   }, [cep]);
 
+
+  const handleFileUpload = (event) => {
+    const files = event.target.files;
+
+    const validFiles: File[] = Array.from(files).map((file) => file as File).filter(
+      (file) => getExtension(file.type) !== null
+    );
+
+    validFiles.map((file) => {
+      console.log(file.name);
+    })
+
+
+    if (validFiles.length !== files.length) {
+      setErrorMessage("Alguns arquivos têm extensões não suportadas.");
+    } 
+    setMediaFiles(validFiles);
+    
+  };
+
   const createHouse = async () => {
     setLoading(true);
+    setErrorMessage("");
+  
+    if(!financialType || !price || !area || !description || !bedrooms || !bathrooms || !garages) {
+      setErrorMessage("Preencha todos os campos");
+      setLoading(false);
+      return;
+    }
 
     try {
-      const houseInfo = {
-        status: financialType,
-        price,
-        adress: `${logradouro}, ${bairro}, ${complemento}, ${city}, ${uf}`,
-        description,
-        area,
-        suites,
-        bedrooms,
-        bathrooms,
-        garages,
-      };
-
-      await axios
-        .post(
-          `${import.meta.env.VITE_API_URL}/api/houses/createHouse`,
-          houseInfo,
-          {
-            withCredentials: true,
-          }
-        )
-        .then((response) => {
-          if (response.status === 200) {
-            navigate("/");
-          }
-        });
-    } catch (error) {
-      console.log(error);
+      // Preparar o FormData
+      const formData = new FormData();
+  
+      // Adicionando os dados do imóvel ao FormData
+      formData.append("status", financialType);
+      formData.append("price", price);
+      formData.append("adress", `${logradouro}, ${bairro}, ${complemento}, ${city}, ${uf}`);
+      formData.append("description", description);
+      formData.append("area", area);
+      formData.append("suites", String(suites));
+      formData.append("bedrooms", String(bedrooms));
+      formData.append("bathrooms", String(bathrooms));
+      formData.append("garages", String(garages));
+  
+      // Adicionando os arquivos ao FormData
+      mediaFiles.forEach((file) => {
+        formData.append("file", file);
+      });
+  
+      // Fazer a requisição para o backend
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/houses/createHouse`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            uploadtype: "media", // Define o tipo de upload (baseado no seu middleware)
+          },
+          withCredentials: true,
+        }
+      );
+  
+      if (response.status === 200) {
+        navigate("/");
+      }
+    } catch (error: any) {
+      console.error("Erro ao criar imóvel:", error);
+      setErrorMessage("Ocorreu um erro ao adicionar o imóvel. Tente novamente.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div
@@ -143,7 +195,7 @@ function CreateHouse() {
         {isModalOpen && (
           <div className="createHouse__modalWrapper">
             <div className="createHouse__modal">
-              <div className="createHouse__hamburguer">
+              <div className="createHouse__hamburguer" onClick={() => setIsModalOpen(false)}>
                 <div className="createHouse__burguer"></div>            
                 <div className="createHouse__burguer"></div>
               </div>
@@ -155,6 +207,7 @@ function CreateHouse() {
           <div className="createHouse__mediaContainer">
             <h2 className="createHouse__title">Adicionar Mídia</h2>
             <FaCirclePlus size={24} className="createHouse__mediaIcon" />
+            <input type="file" className="createHouse__inputFile" multiple onChange={(e) => handleFileUpload(e)}/>
           </div>
         </div>
         <p className="login__backToHome">
