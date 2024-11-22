@@ -273,6 +273,13 @@
   height: 100%;
 }
 
+.createHouse__mediaItens { 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: scroll;
+}
+
 .createHouse__mediaItem { 
   width: 100%;
   border: 2px solid var(--bg-contrast);

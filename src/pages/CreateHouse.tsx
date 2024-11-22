@@ -17,6 +17,7 @@ import {
 import { IoBed } from "react-icons/io5";
 import { formatArea } from "../services/AreaFormatter";
 import { formatCurrency } from "../services/PriceFormatter";
+import { on } from "events";
 
 const ufOptions = [
   "AC",
@@ -81,7 +82,7 @@ function CreateHouse() {
   const [bedrooms, setBedrooms] = useState(0);
   const [bathrooms, setBathrooms] = useState(0);
   const [garages, setGarages] = useState(0);
-  const [financialType, setFinancialType] = useState("Aluguel");
+  const [financialType, setFinancialType] = useState("Venda");
   const [isCepDisabled, setIsCepDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -129,7 +130,22 @@ function CreateHouse() {
     if (validFiles.length !== files.length) {
       setErrorMessage("Alguns arquivos têm extensões não suportadas.");
     } 
-    setMediaFiles(validFiles);
+
+    let newFiles = validFiles;
+    
+    if (newFiles.length < 10) {
+      for (let i = 0; i < mediaFiles.length; i++) {
+        const file = mediaFiles[i];
+        if (newFiles.length === 10) {
+          break;
+        }
+        if (!validFiles.includes(file)) {
+          newFiles.push(file);
+        }
+      }
+    }
+
+    setMediaFiles(newFiles);
     
   };
 
@@ -137,7 +153,7 @@ function CreateHouse() {
     setLoading(true);
     setErrorMessage("");
   
-    if(!financialType || !price || !area || !description || !bedrooms || !bathrooms || !garages) {
+    if(!financialType || !price || !area || !description) {
       setErrorMessage("Preencha todos os campos");
       setLoading(false);
       return;
@@ -162,23 +178,71 @@ function CreateHouse() {
       mediaFiles.forEach((file) => {
         formData.append("file", file);
       });
-  
-      // Fazer a requisição para o backend
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/houses/createHouse`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            uploadtype: "media", // Define o tipo de upload (baseado no seu middleware)
-          },
-          withCredentials: true,
-        }
+
+      let filesName = [];
+
+
+    //  for (const file of mediaFiles) {
+    //    await axios.post(
+    //     `${import.meta.env.VITE_API_URL}/api/upload/file`,
+    //     file,
+    //     {
+    //       withCredentials: true,
+    //     }
+    //    ).then((response) => {
+    //      console.log(response.data)
+    //    })
+    //  }
+
+
+
+
+    try {
+      const uploadPromises = mediaFiles.map(file =>
+        axios.post(
+          `${import.meta.env.VITE_API_URL}/api/upload/file`,
+          file,
+          {
+            withCredentials: true,
+            onUploadProgress: (progressEvent) => {
+              console.log(`Progresso do upload:${file.name}`, progressEvent.loaded / progressEvent.total);
+
+            }
+          }
+        )
       );
   
-      if (response.status === 200) {
-        navigate("/");
-      }
+      const responses = await Promise.all(uploadPromises);
+  
+      // Exibe os resultados após todos os uploads serem concluídos
+      responses.forEach(response => {
+        console.log(response.data);
+      });
+    } catch (error) {
+      console.error("Erro durante o upload:", error);
+    }
+
+
+  
+      // // Fazer a requisição para o backend
+      // const response = await axios.post(
+      //   `${import.meta.env.VITE_API_URL}/api/houses/createHouse`,
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       uploadtype: "media", // Define o tipo de upload (baseado no seu middleware)
+      //     },
+      //     withCredentials: true,
+      //     onUploadProgress: (progressEvent) => {
+      //       console.log("Progresso do upload:", progressEvent.loaded / progressEvent.total);
+      //     }
+      //   }
+      // );
+  
+      // if (response.status === 200) {
+      //   navigate("/");
+      // }
     } catch (error: any) {
       console.error("Erro ao criar imóvel:", error);
       setErrorMessage("Ocorreu um erro ao adicionar o imóvel. Tente novamente.");
@@ -214,7 +278,7 @@ function CreateHouse() {
                 {mediaFiles.map((file, index) => (
                   <div key={index} className="createHouse__mediaItem">
                     <div className="createHouse__mediaInfo">
-                      <h3>{file.name}</h3>
+                      <h4>{file.name}</h4>      
                       <FaTrash size={20}/>
                     </div>
                     <div className="createHouse__progressBar">
