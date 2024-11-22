@@ -35,14 +35,27 @@
   cursor: pointer;
 }
 
+.createHouse__iconContainer { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding:10px;
+  background-color: var(--secondary-green);
+  transition: .5s;
+}
+
 .createHouse__mediaIcon {
-  color: var(--secondary-green);
+  color: var(--bg-accent);
   transition: 0.5s;
 }
 
 .createHouse__mediaContainer:hover {
+  & .createHouse__iconContainer { 
+    background-color: var(--primary-green);
+  }
   & .createHouse__mediaIcon {
-    color: var(--primary-green);
+    color: var(--bg-contrast);
     cursor: pointer;
   }
 
@@ -124,7 +137,48 @@
   -webkit-box-shadow: 0px 10px 35px 0px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
+
+.createHouse__modalTitle { 
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createHouse__newMediaWrapper { 
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+
+  & h2 { 
+    color: var(--secondary-green);
+    transition: .5s;
+  }
+}
+
+.createHouse__newMediaWrapper:hover { 
+  & h2 { 
+    color: var(--primary-green);
+  }
+
+  & .createHouse__iconContainer { 
+    background-color: var(--primary-green);
+  }
+
+  & .createHouse__mediaIcon {
+    color: var(--bg-contrast);
+    cursor: pointer;
+  }
+}
+
 .createHouse__modalCloseButtonContainer { 
   position: absolute;
   display: flex;
@@ -146,7 +200,6 @@
 }
 
 .createHouse__hamburguer {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -218,4 +271,51 @@
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+.createHouse__mediaItem { 
+  width: 100%;
+  border: 2px solid var(--bg-contrast);
+  border-radius: 12px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.createHouse__mediaInfo { 
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createHouse__progressBar { 
+  width: 0%;
+  height: 4px;
+  background-color: var(--primary-green);
+  border-radius: 12px;
+  transition: .5s;
+}
+
+@media only screen and (max-width: 576px) {
+}
+
+@media only screen and (min-width: 576px) {
+}
+
+@media only screen and (min-width: 767px) {
+}
+
+@media only screen and (min-width: 992px) {
+  .createHouse__modal { 
+    padding: 16px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+}
+
+@media only screen and (min-width: 1400px) {
+
 }

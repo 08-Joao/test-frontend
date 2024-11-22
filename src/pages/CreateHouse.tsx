@@ -10,7 +10,9 @@ import {
   FaBath,
   FaCarSide,
   FaDollarSign,
-  FaCirclePlus,
+  FaFileCirclePlus,
+  FaImages,
+  FaTrash
 } from "react-icons/fa6";
 import { IoBed } from "react-icons/io5";
 import { formatArea } from "../services/AreaFormatter";
@@ -195,19 +197,42 @@ function CreateHouse() {
         {isModalOpen && (
           <div className="createHouse__modalWrapper">
             <div className="createHouse__modal">
-              <div className="createHouse__hamburguer" onClick={() => setIsModalOpen(false)}>
-                <div className="createHouse__burguer"></div>            
-                <div className="createHouse__burguer"></div>
+              <div className="createHouse__modalTitle">
+                <div className="createHouse__newMediaWrapper">
+                  <input type="file" className="createHouse__inputFile" multiple onChange={(e) => handleFileUpload(e)}/>
+                  <h2>Adicionar Mídia</h2>
+                  <div className="createHouse__iconContainer">
+                    <FaFileCirclePlus size={18} className="createHouse__mediaIcon" />
+                  </div>
+                </div>
+                <div className="createHouse__hamburguer" onClick={() => setIsModalOpen(false)}>
+                  <div className="createHouse__burguer"></div>            
+                  <div className="createHouse__burguer"></div>
+                </div>
+              </div>
+              <div className="createHouse__mediaItens">
+                {mediaFiles.map((file, index) => (
+                  <div key={index} className="createHouse__mediaItem">
+                    <div className="createHouse__mediaInfo">
+                      <h3>{file.name}</h3>
+                      <FaTrash size={20}/>
+                    </div>
+                    <div className="createHouse__progressBar">
+                      
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         )}
         <div className="createHouse__titleContainer">
           <h1 className="createHouse__title">Adicionar Imóvel</h1>
-          <div className="createHouse__mediaContainer">
-            <h2 className="createHouse__title">Adicionar Mídia</h2>
-            <FaCirclePlus size={24} className="createHouse__mediaIcon" />
-            <input type="file" className="createHouse__inputFile" multiple onChange={(e) => handleFileUpload(e)}/>
+          <div className="createHouse__mediaContainer" onClick={() => {setIsModalOpen(true)}}>
+            <h2 className="createHouse__title">Mídia</h2>
+            <div className="createHouse__iconContainer">              
+                <FaImages size={24} className="createHouse__mediaIcon" />
+            </div>
           </div>
         </div>
         <p className="login__backToHome">
