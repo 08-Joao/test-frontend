@@ -223,10 +223,10 @@ function SignUp() {
             REGISTRAR
           </button>
         )}
-        <div className="signup__logIn">
+        <div className="signup__signin">
           <p className="signup__haveAccount">
             Já possui uma conta?
-            <button onClick={() => navigate("/login")}>Entrar</button>
+            <button onClick={() => navigate("/signin")}>Entrar</button>
           </p>
         </div>
       </div>

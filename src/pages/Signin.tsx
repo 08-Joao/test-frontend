@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DefaultInput from "../components/defaultInput";
-import "../styles/Login.css";
+import "../styles/Signin.css";
 import { IoMailOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Signin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,12 +31,12 @@ function Login() {
     checkAuth();
   }, [navigate]);
 
-  const logIn = async () => {
+  const sign_in = async () => {
     setLoading(true);
     setErrorMessage("");
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/user/login`,
+        `${import.meta.env.VITE_API_URL}/api/user/signin`,
         {
           email,
           password,
@@ -66,8 +66,8 @@ function Login() {
 
   if (checkingAuth) {    
     return (
-      <div className="login__wrapper">
-      <div className="login__loadingContainer">
+      <div className="signin__wrapper">
+      <div className="signin__loadingContainer">
         <div className="spinner"></div>
       </div>
       </div>
@@ -75,13 +75,13 @@ function Login() {
   }
 
   return (
-    <div className="login__wrapper">
-      <div className="login__formBody">
-        <h1>LOGIN</h1>
-        <p className="login__backToHome">Voltar à <label onClick={() => navigate("/")}>Página Inicial</label></p>
+    <div className="signin__wrapper">
+      <div className="signin__formBody">
+        <h1>Entrar</h1>
+        <p className="signin__backToHome">Voltar à <label onClick={() => navigate("/")}>Página Inicial</label></p>
         <DefaultInput
           type="email"
-          className="login__input"
+          className="signin__input"
           icon={IoMailOutline}
           placeHolder="Email"
           maxLength={254}
@@ -89,26 +89,26 @@ function Login() {
         />
         <DefaultInput
           type="password"
-          className="login__input"
+          className="signin__input"
           placeHolder="Senha"
           maxLength={128}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {errorMessage && <p className="login__error">{errorMessage}</p>}
+        {errorMessage && <p className="signin__error">{errorMessage}</p>}
 
         {loading ? (
-          <div className="login__loadingContainer">
+          <div className="signin__loadingContainer">
             <div className="spinner"></div>
           </div>
         ) : (
-          <button className="login__button" onClick={logIn}>
+          <button className="signin__button" onClick={sign_in}>
             ENTRAR
           </button>
         )}
 
-        <div className="login__options">
-          <div className="login__rememberMe">
+        <div className="signin__options">
+          <div className="signin__rememberMe">
             <input type="checkbox" id="remember-me" onClick={() => setRememberMe(!rememberMe)}></input>
             <label htmlFor="remember-me">Lembre de mim</label>
           </div>
@@ -116,8 +116,8 @@ function Login() {
             Esqueceu sua senha?
           </button>
         </div>
-        <div className="login__signIn">
-          <p className="login__forgotPass">
+        <div className="signin__signIn">
+          <p className="signin__forgotPass">
             É novo por aqui?
             <button onClick={() => navigate("/signup")}>Registre-se</button>
           </p>
@@ -127,4 +127,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signin;

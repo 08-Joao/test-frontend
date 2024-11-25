@@ -87,7 +87,7 @@ input[type="date"].signup__input::-webkit-calendar-picker-indicator {
   background-color: var(--primary-green);
 }
 
-.signup__logIn {
+.signup__signin {
   width: 100%;
   display: flex;
   justify-content: center;

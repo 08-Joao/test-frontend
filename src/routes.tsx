@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Signin from "./pages/Signin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -22,9 +22,9 @@ function routes() {
           <Route path="/createHouse/" element={<ProtectedRoute>
             <CreateHouse />
           </ProtectedRoute>} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgot-password" element={<Login />} />
+          <Route path="/forgot-password" element={<Signin />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-.login__wrapper {
+.signin__wrapper {
   height: 100vh;
   width: 100%;
   background-color: var(--bg-color);
@@ -8,7 +8,7 @@
   transition: .5s;
 }
 
-.login__formBody {
+.signin__formBody {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +28,7 @@
   }
 }
 
-.login__button {
+.signin__button {
   background-color: var(--secondary-green);
   border: none;
   width: 100%;
@@ -41,11 +41,11 @@
   transition: .5s;
 }
 
-.login__button:hover { 
+.signin__button:hover { 
   background-color: var(--primary-green);
 }
 
-.login__options { 
+.signin__options { 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +67,7 @@
 
 }
 
-.login__rememberMe {
+.signin__rememberMe {
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -78,14 +78,14 @@
     }
 }
 
-.login__signIn { 
+.signin__signIn { 
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login__forgotPass { 
+.signin__forgotPass { 
     
     & button { 
         background-color: transparent;
@@ -102,18 +102,18 @@
   }
 }
 
-.login__loadingContainer {
+.signin__loadingContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-.login__error {
+.signin__error {
   color: #ff4848;
 }
 
-.login__input {
+.signin__input {
   width: 100%; 
   padding: 12px; 
   font-size: 16px; 
@@ -122,12 +122,12 @@
   transition: border-color 0.3s; 
 }
 
-.login__input:focus {
+.signin__input:focus {
   border-color: var(--secondary-green); 
   outline: none;
 }
 
-.login__backToHome { 
+.signin__backToHome { 
 
   & label { 
     color: var(--secondary-green);

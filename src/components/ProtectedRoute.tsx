@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />; // Redireciona para login se não estiver autenticado
+    return <Navigate to="/signin" />; // Redireciona para signin se não estiver autenticado
   }
 
   console.log(children)

@@ -64,9 +64,9 @@ function Navbar({ isLogged, profilePicture } : {isLogged: boolean, profilePictur
           {isLogged === false ? (
             <div
             onClick={() => {
-              navigate("/login");
+              navigate("/signin");
             }}
-            className="navbar__button navbar__login"
+            className="navbar__button navbar__signin"
           >
             <h3>ENTRAR</h3>
           </div>

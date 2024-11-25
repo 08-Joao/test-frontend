@@ -64,7 +64,7 @@
     width: 110%;
 }
 
-.navbar__login { 
+.navbar__signin { 
     background-color: var(--primary-green);
     padding: 4px;
     border-radius: 12px;
