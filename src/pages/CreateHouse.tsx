@@ -264,7 +264,7 @@ function CreateHouse() {
   return (
     <div
       className="createHouse__wrapper"
-      meta-theme={isDarkMode ? "dark" : "light"}
+      data-theme={isDarkMode ? "dark" : "light"}
     >
       <div className="createHouse__inputsWrapper">
         {isModalOpen && (

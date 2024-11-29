@@ -4,6 +4,7 @@ import DefaultInput from "../components/defaultInput";
 import "../styles/Signin.css";
 import { IoMailOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 
 function Signin() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function Signin() {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -75,7 +77,7 @@ function Signin() {
   }
 
   return (
-    <div className="signin__wrapper">
+    <div className="signin__wrapper" data-theme={isDarkMode ? "dark" : "light"}>
       <div className="signin__formBody">
         <h1>Entrar</h1>
         <p className="signin__backToHome">Voltar à <label onClick={() => navigate("/")}>Página Inicial</label></p>
