@@ -84,8 +84,7 @@ function CreateHouse() {
   const [isCepDisabled, setIsCepDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  // const [mediaFiles, setMediaFiles] = useState<File[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [mediaFiles, setMediaFiles] = useState<File[]>([]);
 
   useEffect(() => {
@@ -166,7 +165,7 @@ function CreateHouse() {
     setLoading(true);
     setErrorMessage("");
 
-    if (!financialType || !price || !area || !description) {
+    if (!financialType || !price || price === 'R$ 0' || !area || area === 'M² 0' || !description) {
       setErrorMessage("Preencha todos os campos");
       setLoading(false);
       return;
@@ -228,9 +227,9 @@ function CreateHouse() {
       }
       
       const houseInfo = {
-        status: financialType,
+        status: financialType === "Venda" ? "SALE" : "RENT",
         price,
-        adress: `${logradouro}, ${bairro}, ${complemento}, ${city}, ${uf}`,
+        address: `${logradouro}, ${bairro}, ${complemento}, ${city}, ${uf}`,
         description,
         area,
         suites,
